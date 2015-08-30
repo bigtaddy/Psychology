@@ -1,0 +1,35 @@
+<div class="task">
+
+    <incentive ng-if="isShowIncentive"
+               incentive-with-groups="incentive">
+    </incentive>
+
+    <form ng-if="isShowForm"
+          class="pure-form answers answers-form">
+        <fieldset>
+            <legend>Введите слова, которые вы запомнили</legend>
+
+            <input type="text"
+                   autofocus
+                   name="word"
+                   ng-model="result.rememberedWord"
+                   placeholder="...">
+
+            <button type="submit"
+                    class="pure-button pure-button-primary submit"
+                    ng-disabled="result.rememberedWord == ''"
+                    ng-click="addRememberedWord()">
+                Добавить
+            </button>
+            <button type="submit"
+                    class="pure-button button-success finish"
+                    ng-click="showIncentive()">
+                    Завершить
+            </button>
+        </fieldset>
+    </form>
+
+    <result-grid ng-if="isShowResult"
+            result="result" experiment-number="1">
+    </result-grid>
+</div>
