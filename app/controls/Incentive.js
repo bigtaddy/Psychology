@@ -32,12 +32,13 @@
 
                     element[0].appendChild(fragmentElement);
 
-                } else if(scope.incentives) {
+                } else if(scope.incentive) {
                     //incentive contains words
-                    scope.incentives.forEach(function(group) {
+                    scope.incentive = scope.intencive.split(global.GroupWordsNumber);
+                    scope.incentive.forEach(function(group) {
                         var ul = ulElement.cloneNode();
 
-                        group.forEach(function(word) {
+                        group.forEach(function(word, index) {
                             var li = liElement.cloneNode();
                             li.textContent = word;
                             ul.appendChild(li);

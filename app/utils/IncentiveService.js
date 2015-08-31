@@ -16,29 +16,45 @@
             return result;
         }
 
-        function handleResults(results, incentives) {
+        function handleResults(incentiveItems) {
+            var experimentResult = {
+                incentives: [],
+                averagePerceivedRightWords: 0
+            };
             //handle count of right remembered words
-            for (var i = 0; i < results.length; i++) {
-                for (var j = 0; j < results[i].rememberedWords.length; j++) {
+            for (var i = 0; i < incentiveItems.length; i++) {
+                var incentiveResult = {countPerceivedWords: 0 };
+
+                for (var j = 0; j < incentiveItems[i].perceivedWords.length; j++) {
                     //remove duplicates
-                    results[i].rememberedWords = results[i].rememberedWords.filter(function(word, position, array){
+                    incentiveItems[i].perceivedWords = incentiveItems[i].perceivedWords.filter(function(word, position, array){
                         return  array.indexOf(word) === position;
                     });
 
-                    if (checkContainValueIn2dArray(incentives[i], results[i].rememberedWords[j])) {
-                        ++results[i].countRightWords;
+                    if (checkContainValueIn2dArray(incentiveItems[i].incentives[i], incentiveItems[i].perceivedWords[j])) {
+                        ++incentiveResult.countPerceivedWords;
                     }
                 }
+                experimentResult.incentives.push(incentiveResult);
             }
+
+            experimentResult.incentives.forEach(function(incentive){
+                experimentResult.averagePerceivedRightWords += incentive.countPerceivedWords;
+            });
+
+            experimentResult.averagePerceivedRightWords = experimentResult.averagePerceivedRightWords / experimentResult.incentives.length;
+
+            return experimentResult;
         }
 
-        this.saveExpeiment1 = function (results, incentives) {
+        this.saveExpeiment1 = function (experimentResult) {
 
             return id;
         };
 
         this.getExperiment1 = function (id) {
 
+            return experimentResult;
         };
 
         this.handleResults = handleResults;

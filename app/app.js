@@ -2,6 +2,12 @@
 
     'use strict';
 
+
+    global.Settings = {
+        ShowTimer: 2000,
+        GroupWordsNumber: 3
+    };
+
     global.app = ng.module('Psychology', [
         'ngRoute'
     ]);

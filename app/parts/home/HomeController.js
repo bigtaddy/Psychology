@@ -16,20 +16,19 @@
         $scope.incentive;
 
         var results = [];
-        var timeToShow = 2000;
+        var showTimer = Settings.ShowTimer;
         var counter = 0;
 
         $scope.incentives = [[
-            ['щука', 'окунь', 'кит'],
-            ['перловка', 'гречка', 'рис'],
-            ['мотоцикл', 'машина', 'трактор'],
-            ['инфляция', 'дефляция', 'процент'],
-            ['стул', 'стол', 'гамак']
+            ['щука', 'окунь', 'кит','перловка',
+                'гречка', 'рис','мотоцикл', 'машина',
+                'трактор','инфляция', 'дефляция', 'процент',
+                'стул', 'стол', 'гамак']
         ]];
 
         $scope.showIncentive = function () {
             if ($scope.isFinished) {
-                IncentiveService.handleResults(results, $scope.incentives);
+                IncentiveService.handleResults(results, $scope.incentives, 1);
                 $scope.results = results;
                 $scope.isShowForm = false;
                 $scope.isShowResult = true;
@@ -37,11 +36,10 @@
             }
             //create new result
             results[counter] = {
-                rememberedWords: [],
-                countRightWords: 0
+                 incentive: $scope.incentives[counter],
+                 rememberedWords: []
 
             };
-            $scope.incentive = $scope.incentives[counter];
             $scope.isShowForm = false;
             $scope.isShowIncentive = true;
 
@@ -52,7 +50,7 @@
                 if (counter >= $scope.incentives.length) {
                     $scope.isFinished = true;
                 }
-                }, timeToShow)
+                }, showTimer)
         };
 
         $scope.addRememberedWord = function () {
