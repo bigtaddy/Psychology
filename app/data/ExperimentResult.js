@@ -2,56 +2,56 @@
 
     'use strict';
 
-    function ExperimentResult (data, type) {
+    function ExperimentResults (data, experimentType) {
+        this.IncentivesResults = [];  //IncentivesResult = {countPerceivedWords:0}
+        this.AverageRememberedRightWords =  0;
 
-        this.IncentivesResults = [];
-        this.AveragePerceivedRightWords =  0;
+        var _this = this;
 
-        function checkContainValueIn2dArray(array, value) {
+        //indexesWithFeatures
+
+        handleResults(data);
+
+        function checkContainValueInArray(array, value) {
             var result = false;
-
-            for (var i = 0, length = array.length; i < length; i++) {
-                if (!!~array[i].indexOf(value)) {
-                    result = true;
-                    break;
-                }
+            if (!!~array.indexOf(value)) {
+                result = true;
             }
             return result;
         }
 
-        function handleResults(incentiveItems) {
-            var experimentResult = {
-                incentives: [],
-                averagePerceivedRightWords: 0
-            };
+        function handleResults(incentivesData) {
             //handle count of right remembered words
-            for (var i = 0; i < incentiveItems.length; i++) {
-                var incentiveResult = {countPerceivedWords: 0 };
+            var commonCountRememberedWords = 0;
 
-                for (var j = 0; j < incentiveItems[i].perceivedWords.length; j++) {
+            for (var i = 0; i < incentivesData.length; i++) {
+                var incentiveResult = {countRememberedWords: 0 };
+
+                for (var j = 0; j < incentivesData[i].rememberedWords.length; j++) {
                     //remove duplicates
-                    incentiveItems[i].perceivedWords = incentiveItems[i].perceivedWords.filter(function(word, position, array){
+                    incentivesData[i].rememberedWords = incentivesData[i].rememberedWords.filter(function(word, position, array){
                         return  array.indexOf(word) === position;
                     });
 
-                    if (checkContainValueIn2dArray(incentiveItems[i].incentives[i], incentiveItems[i].perceivedWords[j])) {
-                        ++incentiveResult.countPerceivedWords;
+                    if (checkContainValueInArray(incentivesData[i].incentive, incentivesData[i].rememberedWords[j])) {
+                        ++incentiveResult.countRememberedWords;
                     }
                 }
-                experimentResult.incentives.push(incentiveResult);
+
+                _this.IncentivesResults.push(incentiveResult);
             }
 
-            experimentResult.incentives.forEach(function(incentive){
-                experimentResult.averagePerceivedRightWords += incentive.countPerceivedWords;
+            _this.IncentivesResults.forEach(function(incentive){
+                commonCountRememberedWords += incentive.countRememberedWords;
             });
 
-            experimentResult.averagePerceivedRightWords = experimentResult.averagePerceivedRightWords / experimentResult.incentives.length;
-
-            return experimentResult;
+            _this.AverageRememberedRightWords = commonCountRememberedWords / _this.IncentivesResults.length;
         }
 
 
     }
+
+    global.ExperimentResults = ExperimentResults;
 
 }(window, angular));
 

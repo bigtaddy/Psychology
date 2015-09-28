@@ -5,7 +5,7 @@
 (function (global, ng) {
     'use strict';
 
-    function HomeController($scope, $timeout, IncentiveService) {
+    function HomeController($scope, $timeout, ExperimentService) {
         $scope.isShowIncentive = false;
         $scope.isShowForm = false;
         $scope.isShowResult = false;
@@ -13,30 +13,40 @@
         $scope.result = {
             rememberedWord: ''
         };
-        $scope.incentive;
+        $scope.results = [];
+        $scope.incentives = [];
 
         var results = [];
         var showTimer = Settings.ShowTimer;
         var counter = 0;
 
-        $scope.incentives = [[
+        var experimentIncentives = [
             ['щука', 'окунь', 'кит','перловка',
                 'гречка', 'рис','мотоцикл', 'машина',
                 'трактор','инфляция', 'дефляция', 'процент',
                 'стул', 'стол', 'гамак']
-        ]];
+        ,
+                ['щука', 'окунь', 'кит','перловка',
+                    'гречка', 'рис','мотоцикл', 'машина',
+                    'трактор','инфляция', 'дефляция', 'процент',
+                    'стул', 'стол', 'гамак']
+            ];
 
         $scope.showIncentive = function () {
             if ($scope.isFinished) {
-                IncentiveService.handleResults(results, $scope.incentives, 1);
-                $scope.results = results;
+                $scope.experimentResults  = new ExperimentResults($scope.results, 1);
                 $scope.isShowForm = false;
                 $scope.isShowResult = true;
                 return;
             }
             //create new result
-            results[counter] = {
-                 incentive: $scope.incentives[counter],
+            $scope.experimentType = ExperimentService.experimentType;
+            $scope.incentives = experimentIncentives[counter].slice();
+            $scope.indexesFeatures = ExperimentService.getIndexesOfWordsWithFeatures($scope.incentives.length);
+
+            $scope.results[counter] = {
+                 incentive: $scope.incentives,
+                indexesFeatures: $scope.indexesFeatures,
                  rememberedWords: []
 
             };
@@ -47,14 +57,14 @@
                 $scope.isShowIncentive = false;
                 $scope.isShowForm = true;
                 ++counter;
-                if (counter >= $scope.incentives.length) {
+                if (counter >= experimentIncentives.length) {
                     $scope.isFinished = true;
                 }
                 }, showTimer)
         };
 
         $scope.addRememberedWord = function () {
-            results[counter - 1].rememberedWords.push($scope.result.rememberedWord);
+            $scope.results[counter - 1].rememberedWords.push($scope.result.rememberedWord);
             $scope.result.rememberedWord = '';
         };
 

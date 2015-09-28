@@ -1,7 +1,9 @@
 <div class="task">
 
     <incentive ng-if="isShowIncentive"
-               incentive="incentive">
+               incentives="incentives"
+               indexes-features="indexesFeatures"
+               experiment-type="experimentType">
     </incentive>
 
     <form ng-if="isShowForm"
@@ -30,6 +32,6 @@
     </form>
 
     <result-grid ng-if="isShowResult"
-            result="result" experiment-number="1">
+            result="experimentResults" experiment-number="1">
     </result-grid>
 </div>

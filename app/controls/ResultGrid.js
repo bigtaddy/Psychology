@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function ResultGrid () {
+    function ResultGrid() {
         return {
             restrict: 'E',
             replace: true,
@@ -13,21 +13,21 @@
             },
             link: function (scope, element) {
 
-                if(!scope.result) {
+                if (!scope.result) {
                     return;
                 }
 
                 var fragmentElement = document.createDocumentFragment();
-                var trElement =  document.createElement('tr');
-                var tdElement =  document.createElement('td');
+                var trElement = document.createElement('tr');
+                var tdElement = document.createElement('td');
 
-                if(scope.experimentNumber === 1) {
-
+                function createResultGrid1() {
                     var tr = trElement.cloneNode();
                     var td = tdElement.cloneNode();
+                    td.className = 'bold';
                     td.textContent = 'Номер стимула';
                     tr.appendChild(td);
-                    scope.result.incentives.forEach(function(intencive, index) {
+                    scope.result.IncentivesResults.forEach(function (intencive, index) {
                         var td = tdElement.cloneNode();
                         td.textContent = index + 1;
                         tr.appendChild(td);
@@ -36,26 +36,41 @@
 
                     var tr = trElement.cloneNode();
                     var td = tdElement.cloneNode();
+                    td.className = 'bold';
                     td.textContent = 'Количество воспринятых слов';
                     tr.appendChild(td);
 
-                    scope.result.incentives.forEach(function(intencive) {
+                    scope.result.IncentivesResults.forEach(function (intencive) {
                         var td = tdElement.cloneNode();
-                        td.textContent = intencive.numberPerceivedWords;
+                        td.textContent = intencive.countRememberedWords;
                         tr.appendChild(td);
                     });
                     fragmentElement.appendChild(tr);
 
                     var tr = trElement.cloneNode();
                     var td = tdElement.cloneNode();
+                    td.className = 'bold';
                     td.textContent = 'Среднее количество воспринятых слов';
                     tr.appendChild(td);
                     var td = tdElement.cloneNode();
-                    td.textContent = scope.result.averageNumberPerceivedWords;
+                    td.textContent = scope.result.AverageRememberedRightWords;
+                   // td.setAttribute('colspan', 2);
                     tr.appendChild(td);
                     fragmentElement.appendChild(tr);
 
                     element[0].appendChild(fragmentElement);
+                }
+
+                if (scope.experimentNumber === 1) {
+                    createResultGrid1();
+                } else if (scope.experimentNumber === 2) {
+                    createResultGrid2();
+                } else if (scope.experimentNumber === 3) {
+                    createResultGrid3();
+                } else if (scope.experimentNumber === 4) {
+                    createResultGrid4();
+                } else if (scope.experimentNumber === 5) {
+                    createResultGrid5();
                 }
             }
         };

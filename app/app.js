@@ -5,7 +5,8 @@
 
     global.Settings = {
         ShowTimer: 2000,
-        GroupWordsNumber: 3
+        NumberWordsInGroup: 3,
+        ProbabilityWordFeature: 0.25
     };
 
     global.app = ng.module('Psychology', [

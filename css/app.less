@@ -19,6 +19,9 @@ body {
   padding: 0px 20px;
 }
 
+.bold{
+  font-weight: bold;
+}
 
 
 .task {
@@ -26,7 +29,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: 2em;
+  font-size: 32px;
 
   .answers-form{
     height: 400px;
@@ -44,11 +47,17 @@ body {
         display: block;
         float: left;
         padding-right: 50px;
-      }
+        li {
+          display: block;
+          padding-bottom: 20px;
 
-      li {
-        display: block;
-        padding-bottom: 20px;
+          &.fontSizeFeature{
+            font-size: 42px;
+          }
+          &.fontBoldFeature{
+            font-weight: bold;
+          }
+        }
       }
 
 
