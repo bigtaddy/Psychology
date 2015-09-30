@@ -22,6 +22,10 @@
 
                 $routeProvider
                     .when('/', {
+                        templateUrl: 'app/parts/main/main.html',
+                        controller: 'MainController'
+                    } )
+                    .when('/experiment', {
                         templateUrl: 'app/parts/home/home.html',
                         controller: 'HomeController'
                     } )
