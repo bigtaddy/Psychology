@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://D:/Work/Psychology/.idea/Psychology.iml" filepath="D:/Work/Psychology/.idea/Psychology.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Psychology.iml" filepath="$PROJECT_DIR$/.idea/Psychology.iml" />
     </modules>
   </component>
 </project>
+
