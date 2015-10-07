@@ -18,6 +18,8 @@
 
         var results = [];
         var showTimer = Settings.ShowTimer;
+        $scope.experimentType = ExperimentService.experimentType;
+
         var counter = 0;
 
         var experimentIncentives = [
@@ -34,19 +36,18 @@
 
         $scope.showIncentive = function () {
             if ($scope.isFinished) {
-                $scope.experimentResults  = new ExperimentResults($scope.results, 1);
+                $scope.experimentResults  = new ExperimentResults($scope.results, $scope.experimentType);
                 $scope.isShowForm = false;
                 $scope.isShowResult = true;
                 return;
             }
             //create new result
-            $scope.experimentType = ExperimentService.experimentType;
             $scope.incentives = experimentIncentives[counter].slice();
             $scope.indexesFeatures = ExperimentService.getIndexesOfWordsWithFeatures($scope.incentives.length);
 
             $scope.results[counter] = {
                  incentive: $scope.incentives,
-                indexesFeatures: $scope.indexesFeatures,
+                 indexesFeatures: $scope.indexesFeatures,
                  rememberedWords: []
 
             };

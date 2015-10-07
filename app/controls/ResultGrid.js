@@ -9,7 +9,7 @@
             template: '<table class="result-grid pure-table pure-table-bordered"></table>',
             scope: {
                 result: '=',
-                experimentNumber: '='
+                experimentType: '='
             },
             link: function (scope, element) {
 
@@ -53,7 +53,7 @@
                     td.textContent = 'Среднее количество воспринятых слов';
                     tr.appendChild(td);
                     var td = tdElement.cloneNode();
-                    td.textContent = scope.result.AverageRememberedRightWords;
+                    td.textContent = scope.result.AverageRememberedWords;
                    // td.setAttribute('colspan', 2);
                     tr.appendChild(td);
                     fragmentElement.appendChild(tr);
@@ -96,7 +96,11 @@
 
                     scope.result.IncentivesResults.forEach(function (intencive) {
                         var td = tdElement.cloneNode();
-                        td.textContent = intencive.countRememberedWords;
+                        var rememberedWordsWithFeature = 0;
+                        if(intencive.countRememberedWords) {
+                            rememberedWordsWithFeature =  intencive.countRememberedWordsWithFeature / intencive.countRememberedWords * 100;
+                        }
+                        td.textContent = rememberedWordsWithFeature;
                         tr.appendChild(td);
                     });
                     fragmentElement.appendChild(tr);
@@ -107,7 +111,11 @@
                     td.textContent = 'Среднее количество воспринятых слов, обладающих отличительным признаком, %';
                     tr.appendChild(td);
                     var td = tdElement.cloneNode();
-                    td.textContent = scope.result.AverageRememberedRightWords;
+                    var averageRememberedWordsWithFeature = 0;
+                    if(scope.result.CommonCountRememberedWords) {
+                        averageRememberedWordsWithFeature =  scope.result.AverageRememberedWordsWithFeature / scope.result.CommonCountRememberedWords * 100;
+                    }
+                    td.textContent = averageRememberedWordsWithFeature;
                     // td.setAttribute('colspan', 2);
                     tr.appendChild(td);
                     fragmentElement.appendChild(tr);
@@ -115,15 +123,15 @@
                     element[0].appendChild(fragmentElement);
                 }
 
-                if (scope.experimentNumber === 1) {
+                if (scope.experimentType === 1) {
                     createResultGrid1();
-                } else if (scope.experimentNumber === 2) {
+                } else if (scope.experimentType === 2) {
                     createResultGrid2();
-                } else if (scope.experimentNumber === 3) {
+                } else if (scope.experimentType === 3) {
                     createResultGrid3();
-                } else if (scope.experimentNumber === 4) {
+                } else if (scope.experimentType === 4) {
                     createResultGrid3();
-                } else if (scope.experimentNumber === 5) {
+                } else if (scope.experimentType === 5) {
                     createResultGrid5();
                 }
             }

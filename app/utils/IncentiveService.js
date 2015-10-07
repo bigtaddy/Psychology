@@ -6,7 +6,7 @@
 
         var _this = this;
 
-        this.experimentType = 5;
+        this.experimentType = 1;
 
         function rand (min, max) {
             return Math.random() * (max - min) + min;
