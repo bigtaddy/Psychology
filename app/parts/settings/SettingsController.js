@@ -5,7 +5,7 @@
 (function (global, ng) {
     'use strict';
 
-    function MainController($scope, $location, ExperimentService) {
+    function SettingsController($scope, $location, ExperimentService) {
 
         $scope.isAdminPermissions = global.Permissions.role === 'admin';
 
@@ -23,7 +23,7 @@
     }
 
 
-    app.controller('MainController', MainController);
+    app.controller('SettingsController', SettingsController);
 
 
 }(window, angular));

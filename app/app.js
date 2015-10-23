@@ -5,8 +5,17 @@
 
     global.Settings = {
         ShowTimer: 2000,
-        NumberWordsInGroup: 3,
+        NumberWordsInGroup: 4,
         ProbabilityWordFeature: 0.25
+    };
+
+    global.AdminAccount = {
+        login: 'admin',
+        password: 'ipoit'
+    };
+
+    global.Permissions = {
+        role: 'admin'
     };
 
     global.app = ng.module('Psychology', [
@@ -28,6 +37,10 @@
                     .when('/experiment', {
                         templateUrl: 'app/parts/home/home.html',
                         controller: 'HomeController'
+                    } )
+                    .when('/settings', {
+                        templateUrl: 'app/parts/settings/settings.html',
+                        controller: 'SettingsController'
                     } )
                     .otherwise({
                         redrectTo: '/'

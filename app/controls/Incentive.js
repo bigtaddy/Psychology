@@ -20,33 +20,36 @@
 
 
                 //incentive contains words
-                scope.incentives = scope.incentives.split(Settings.NumberWordsInGroup);
-                scope.incentives.forEach(function (group, groupIndex) {
-                    var ul = ulElement.cloneNode();
 
-                    group.forEach(function (word, wordIndex) {
-                        var li = liElement.cloneNode();
-                        var index = (wordIndex + 1) * (groupIndex + 1);
-                        if (!!~scope.indexesFeatures.indexOf(index)) {
-                            if (scope.experimentType === 3) {
-                                li.className = ('fontSizeFeature');
-                            } else if (scope.experimentType === 4) {
-                                li.className = ('fontBoldFeature');
-                            } else if (scope.experimentType === 5) {
-                                 li.className = ('fontSizeFeature');
-                                 li.className = ('fontBoldFeature');
-                            }
+                var wordElements = [];
+                scope.incentives.forEach(function (word, wordIndex) {
+                    var li = liElement.cloneNode();
+                    if (!!~scope.indexesFeatures.indexOf(wordIndex)) {
+                        if (scope.experimentType === 3) {
+                            li.className = ('fontSizeFeature');
+                        } else if (scope.experimentType === 4) {
+                            li.className = ('fontBoldFeature');
+                        } else if (scope.experimentType === 5) {
+                            li.className = ('fontSizeFeature');
                         }
-                        li.textContent = word;
-                        ul.appendChild(li);
+                    }
+                    li.textContent = word;
+                    wordElements.push(li);
+                });
+
+                wordElements= wordElements.split(Settings.NumberWordsInGroup);
+                wordElements.forEach(function (group) {
+                    var ul = ulElement.cloneNode();
+                    group.forEach(function (word) {
+                        ul.appendChild(word);
                     });
                     fragmentElement.appendChild(ul);
                 });
 
                 element[0].appendChild(fragmentElement);
 
-                if (scope.experimentType === 2) {
-                    element[0].addClass('wordsInGroups');
+                if (scope.experimentType === 2 || scope.experimentType === 5) {
+                    element[0].classList.add('wordsInGroups');
                 }
 
             }

@@ -9,6 +9,7 @@
         this.experimentType = 1;
 
         function rand (min, max) {
+
             return Math.random() * (max - min) + min;
         }
 
@@ -50,12 +51,12 @@
             return indexesFeatures;
         };
 
-        this.saveExpeiment = function (experimentResult) {
+        this.saveExperiment = function (experimentResult) {
 
             return id;
         };
 
-        this.getExperiment1 = function (id) {
+        this.getExperiment = function (id) {
 
             return experimentResult;
         };
