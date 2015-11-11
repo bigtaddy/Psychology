@@ -9,11 +9,7 @@
 
         $scope.isAdminPermissions = global.Permissions.role === 'admin';
 
-        $scope.startExperiment = function (experimentType) {
-            ExperimentService.experimentType = experimentType;
-            $location.url('/experiment');
-        };
-
+        
 
         $scope.changeSettings = function () {
             $location.url('/settings');

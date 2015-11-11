@@ -5,7 +5,7 @@
 (function (global, ng) {
     'use strict';
 
-    function HomeController($scope, $timeout, ExperimentService) {
+    function HomeController($scope, $timeout, $location, ExperimentService) {
         $scope.isShowIncentive = false;
         $scope.isShowForm = false;
         $scope.isShowResult = false;
@@ -67,6 +67,10 @@
         $scope.addRememberedWord = function () {
             $scope.results[counter - 1].rememberedWords.push($scope.result.rememberedWord);
             $scope.result.rememberedWord = '';
+        };
+
+        $scope.goToMenu = function(){
+            $location.url('/');
         };
 
         //start show

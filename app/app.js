@@ -2,7 +2,6 @@
 
     'use strict';
 
-
     global.Settings = {
         ShowTimer: 2000,
         NumberWordsInGroup: 4,
@@ -30,6 +29,10 @@
                // $locationProvider.html5Mode(true);
 
                 $routeProvider
+                    .when('/login', {
+                        templateUrl: 'app/parts/login/login.html',
+                        controller: 'LoginController'
+                    })
                     .when('/', {
                         templateUrl: 'app/parts/main/main.html',
                         controller: 'MainController'

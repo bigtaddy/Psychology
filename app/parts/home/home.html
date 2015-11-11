@@ -31,7 +31,16 @@
         </fieldset>
     </form>
 
-    <result-grid ng-if="isShowResult"
-            result="experimentResults" experiment-type="experimentType">
-    </result-grid>
+
+    <div class="result" ng-if="isShowResult">
+        <result-grid
+                
+                     result="experimentResults" experiment-type="experimentType">
+        </result-grid>
+
+            <button class="pure-button pure-button-primary menu" ng-click="goToMenu()">Вернуться в меню</button>
+    </div>
+
+
+
 </div>

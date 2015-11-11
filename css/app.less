@@ -23,6 +23,26 @@ body {
   font-weight: bold;
 }
 
+#login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 20px;
+  .login-form {
+    display: block;
+
+    .roles{
+      label {
+        margin-left: 12em;
+        text-align:left;
+      }
+      margin-bottom: 2em;
+    }
+  }
+
+}
+
 
 .main-menu {
   display: flex;
@@ -37,7 +57,7 @@ body {
   }
   button {
     display: block;
-    margin-bottom: 15px;
+    margin-bottom: 1.5em;
 
     &.settings {
       display: block;
@@ -85,7 +105,16 @@ body {
         }
       }
 
-
   }
 
+  .menu.pure-button {
+    margin-top: 3em;
+    float: right;
+  }
+}
+
+.result-grid{
+  td[colspan] {
+    text-align: center;
+  }
 }

@@ -1,0 +1,52 @@
+<div id="login">
+    <form class="login-form pure-form pure-form-aligned">
+
+        <fieldset>
+            <div class="roles">
+
+                <div class="pure-control-group">
+                    <label for="user">
+                        <input type="radio" id="user" name="role" ng-model="role" value="user">
+                        Испытуемый
+                    </label>
+                </div>
+
+                <div class="pure-control-group">
+
+                    <label for="admin">
+                        <input type="radio" id="admin" name="role" ng-model="role" value="admin">
+                        Экспериментатор
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="user-fields" ng-if="role=='user'">
+
+                <div class="pure-control-group">
+                    <label>Ф.И.О.</label> <input type="text" ng-model="userData.fullName" required="">
+                </div>
+
+                <div class="pure-control-group">
+                    <label>Группа</label> <input type="text" ng-model="userData.group" required="">
+                </div>
+
+            </div>
+
+            <div class="admin-fields" ng-if="role=='admin'">
+                <div class="pure-control-group">
+                    <label>Пароль</label> <input type="password" ng-model="userData.password" required="">
+                </div>
+
+            </div>
+
+            <div class="pure-controls">
+                <button class="pure-button pure-button-primary" ng-click="login()">Войти</button>
+            </div>
+        </fieldset>
+
+    </form>
+</div>
+
+
+
