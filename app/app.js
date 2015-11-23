@@ -3,10 +3,13 @@
     'use strict';
 
     global.Settings = {
-        ShowTimer: 2000,
-        NumberWordsInGroup: 4,
-        ProbabilityWordFeature: 0.25
+        showTimer: 2000,
+        numberWordsInGroup: 4,
+        numberGroupsInIncentive: 4,
+        probabilityWordFeature: 0.25
     };
+
+    global.Words= {};
 
     global.AdminAccount = {
         login: 'admin',
@@ -36,15 +39,23 @@
                     .when('/', {
                         templateUrl: 'app/parts/main/main.html',
                         controller: 'MainController'
-                    } )
+                    })
                     .when('/experiment', {
                         templateUrl: 'app/parts/home/home.html',
                         controller: 'HomeController'
-                    } )
+                    })
                     .when('/settings', {
                         templateUrl: 'app/parts/settings/settings.html',
                         controller: 'SettingsController'
-                    } )
+                    })
+                    .when('/incentives/:number', {
+                        templateUrl: 'app/parts/incentives/incentives.html',
+                        controller: 'IncentivesController'
+                    })
+                    .when('/incentives-menu', {
+                        templateUrl: 'app/parts/incentives/incentivesMenu.html',
+                        controller: 'IncentivesMenuController'
+                    })
                     .otherwise({
                         redrectTo: '/'
                     });
@@ -75,8 +86,9 @@
             }
         ])
         .run([
-            '$rootScope',
-            function ($rootScope) {
+            '$rootScope', '$location',
+            function ($rootScope, $location) {
+
 
                 var loader = global.document.getElementById('loader'),
                     opacity = 1,
@@ -95,7 +107,16 @@
                     };
                 global.document.onload = fadeOut();
 
+            //    $location.url('/login');
 
+                var settings = global.localStorage.Settings;
+                if(settings) {
+                    global.Settings = JSON.parse(settings);
+                }
+                var words = global.localStorage.Words;
+                if(words) {
+                    global.Words = JSON.parse(words);
+                }
             }
         ]);
 

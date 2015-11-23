@@ -37,7 +37,7 @@
                     wordElements.push(li);
                 });
 
-                wordElements= wordElements.split(Settings.NumberWordsInGroup);
+                wordElements= wordElements.split(Settings.numberWordsInGroup);
                 wordElements.forEach(function (group) {
                     var ul = ulElement.cloneNode();
                     group.forEach(function (word) {

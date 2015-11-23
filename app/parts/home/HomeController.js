@@ -17,12 +17,12 @@
         $scope.incentives = [];
 
         var results = [];
-        var showTimer = Settings.ShowTimer;
+        var showTimer = Settings.showTimer;
         $scope.experimentType = ExperimentService.experimentType;
 
-        var counter = 0;
+        var counter = 1;
 
-        var experimentIncentives = [
+        /*var experimentIncentives = [
             ['щука', 'окунь', 'кит','перловка',
                 'гречка', 'рис','мотоцикл', 'машина',
                 'трактор','инфляция', 'дефляция', 'процент',
@@ -32,7 +32,9 @@
                     'гречка', 'рис','мотоцикл', 'машина',
                     'трактор','инфляция', 'дефляция', 'процент',
                     'стул', 'стол', 'гамак']
-            ];
+            ];*/
+
+        var experimentIncentives = global.Words[$scope.experimentType];
 
         $scope.showIncentive = function () {
             if ($scope.isFinished) {

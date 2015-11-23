@@ -1,23 +1,20 @@
-
-
-
 <div class="main-menu">
-
-
 
     <div class="start-experiment">
 
-        <button ng-if="isAdminPermissions"  class="pure-button button-success settings" ng-click="changeSettings()">Изменить настройки</button>
+        <button ng-if="isAdminPermissions"  class="pure-button button-success settings" ng-click="changeSettings()">Настройки</button>
 
-        <button  class="pure-button pure-button-primary" ng-click="startExperiment(1)">Начать эксперимент № 1</button>
+        <button ng-if="isAdminPermissions"  class="pure-button button-success settings" ng-click="changeIncentives()">Редактирование набора стимулов</button>
 
-        <button class="pure-button pure-button-primary" ng-click="startExperiment(2)">Начать эксперимент № 2</button>
+        <button class="pure-button pure-button-primary" ng-click="startExperiment(1)">Эксперимент № 1</button>
 
-        <button class="pure-button pure-button-primary" ng-click="startExperiment(3)">Начать эксперимент № 3</button>
+        <button class="pure-button pure-button-primary" ng-click="startExperiment(2)">Эксперимент № 2</button>
 
-        <button class="pure-button pure-button-primary" ng-click="startExperiment(4)">Начать эксперимент № 4</button>
+        <button class="pure-button pure-button-primary" ng-click="startExperiment(3)">Эксперимент № 3</button>
 
-        <button class="pure-button pure-button-primary" ng-click="startExperiment(5)">Начать эксперимент № 5</button>
+        <button class="pure-button pure-button-primary" ng-click="startExperiment(4)">Эксперимент № 4</button>
+
+        <button class="pure-button pure-button-primary" ng-click="startExperiment(5)">Эксперимент № 5</button>
     </div>
 
 

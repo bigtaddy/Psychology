@@ -1,0 +1,69 @@
+<div id="incentives">
+
+    <form
+          class="pure-form incentives form">
+        <fieldset>
+            <legend>Редактирование слов в стимуле</legend>
+
+            <input type="text"
+                   autofocus
+                   name="word"
+                   ng-model="newWord.name"
+                   placeholder="..."
+                   class="new-word">
+
+            <button type="submit"
+                    class="pure-button pure-button-primary submit"
+                    ng-disabled="newWord.name == ''"
+                    ng-click="add(newWord.name)">
+                Добавить слово
+            </button>
+
+
+            <div class="table-wrappeer">
+                <table
+                        class="table pure-table pure-table-bordered"
+                        ng-if="words.length != 0">
+                    <tr>
+                        <td>
+                            №
+                        </td>
+                        <td>
+                            Значение
+                        </td>
+                        <td colspan="1">
+                            Действие
+                        </td>
+                    </tr>
+                    <tr ng-repeat="word in words track by $index">
+                        <td>{{$index+1}}
+                        </td>
+                        <td>{{word}}
+                        </td>
+                        <td>
+
+                            <button
+                                    class="pure-button button-error"
+                                    ng-click="remove($index)">
+                                Удалить
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+            <div class="pure-controls">
+                <button class="pure-button button-success" ng-click="save()">Сохранить</button>
+                <button class="pure-button pure-button-primary" ng-click="return()">Назад</button>
+
+            </div>
+
+
+        </fieldset>
+    </form>
+
+</div>
+
+
+

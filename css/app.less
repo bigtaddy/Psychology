@@ -34,15 +34,86 @@ body {
 
     .roles{
       label {
-        margin-left: 12em;
+        margin-left: 14em;
         text-align:left;
       }
       margin-bottom: 2em;
     }
   }
+}
+
+#settings{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 20px;
+  .form {
+    display: block;
+
+    .pure-control-group{
+      margin-bottom: 1em;
+
+      label {
+        width: 14em;
+        text-align:left;
+      }
+      select{
+        width: 16em;
+      }
+    }
+
+    button {
+      margin-top: 2em;
+    }
+
+  }
 
 }
 
+#incentives{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 20px;
+  .form {
+    display: block;
+
+    .pure-control-group{
+      margin-bottom: 1em;
+
+      label {
+        width: 14em;
+        text-align:left;
+      }
+      select{
+        width: 16em;
+      }
+    }
+
+    .pure-controls{
+      button{
+        float: right;
+        &.pure-button-primary{
+          float: left;
+        }
+      }
+    }
+
+  }
+
+  .table-wrappeer {
+    margin: 30px 0;
+    height: 300px;
+    overflow-y: scroll;
+    table td{
+      border-width: 1px;
+      border-right: 1px solid #cbcbcb;
+    }
+  }
+
+}
 
 .main-menu {
   display: flex;
@@ -57,7 +128,7 @@ body {
   }
   button {
     display: block;
-    margin-bottom: 1.5em;
+    margin: 1em auto;
 
     &.settings {
       display: block;
@@ -117,4 +188,8 @@ body {
   td[colspan] {
     text-align: center;
   }
+}
+
+#incentives{
+
 }

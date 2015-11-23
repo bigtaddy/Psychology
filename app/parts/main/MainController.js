@@ -19,6 +19,9 @@
             $location.url('/settings');
         };
 
+        $scope.changeIncentives = function () {
+            $location.url('/incentives-menu');
+        };
 
     }
 

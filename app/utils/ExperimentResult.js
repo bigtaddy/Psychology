@@ -77,7 +77,7 @@
 
                             //Количество групп, в которые входят воспринятые слова (nгр)
                            var indexRememberedWord =  incentivesData[i].incentive.indexOf(incentivesData[i].rememberedWords[j]) + 1;
-                            groupNumberWithRememberedWords = (Math.ceil(indexRememberedWord * global.Settings.ProbabilityWordFeature));
+                            groupNumberWithRememberedWords = (Math.ceil(indexRememberedWord * global.Settings.probabilityWordFeature));
                             if(!~groupNumbersWithRememberedWords.indexOf(groupNumberWithRememberedWords)) {
                                 groupNumbersWithRememberedWords.push(groupNumberWithRememberedWords);
                                 ++incentiveResult.countGroupsWithRememberedWords;
@@ -87,7 +87,7 @@
                             if(experimentType === 5) {
                                 if(!!~incentivesData[i].indexesFeatures.indexOf(incentivesData[i].incentive.indexOf(incentivesData[i].rememberedWords[j]))) {
                                     var indexRememberedWordWithFeature = incentivesData[i].incentive.indexOf(incentivesData[i].rememberedWords[j]) + 1;
-                                    groupNumberWithRememberedWordsWithFeatures = (Math.ceil(indexRememberedWordWithFeature * global.Settings.ProbabilityWordFeature));
+                                    groupNumberWithRememberedWordsWithFeatures = (Math.ceil(indexRememberedWordWithFeature * global.Settings.probabilityWordFeature));
                                     if(!~groupNumbersWithRememberedWordsWithFeatures.indexOf(groupNumberWithRememberedWordsWithFeatures)) {
                                         groupNumbersWithRememberedWordsWithFeatures.push(groupNumberWithRememberedWordsWithFeatures);
                                         ++incentiveResult.countGroupsWithRememberedWordsWithFeatures;

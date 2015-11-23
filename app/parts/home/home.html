@@ -21,21 +21,19 @@
                     class="pure-button pure-button-primary submit"
                     ng-disabled="result.rememberedWord == ''"
                     ng-click="addRememberedWord()">
-                Добавить
+                Добавить слово
             </button>
             <button type="submit"
                     class="pure-button button-success finish"
                     ng-click="showIncentive()">
-                    Завершить
+                    Завершить ввод
             </button>
         </fieldset>
     </form>
 
 
     <div class="result" ng-if="isShowResult">
-        <result-grid
-                
-                     result="experimentResults" experiment-type="experimentType">
+        <result-grid result="experimentResults" experiment-type="experimentType">
         </result-grid>
 
             <button class="pure-button pure-button-primary menu" ng-click="goToMenu()">Вернуться в меню</button>
