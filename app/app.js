@@ -6,6 +6,7 @@
         showTimer: 2000,
         numberWordsInGroup: 4,
         numberGroupsInIncentive: 4,
+        numberIncentives: 1,
         probabilityWordFeature: 0.25
     };
 

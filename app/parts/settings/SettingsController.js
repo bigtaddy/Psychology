@@ -11,12 +11,15 @@
             showTimer: global.Settings.showTimer,
             numberWordsInGroup: global.Settings.numberWordsInGroup,
             numberGroupsInIncentive: global.Settings.numberGroupsInIncentive,
+            numberIncentives: global.Settings.numberIncentives,
+
             probabilityWordFeature: global.Settings.probabilityWordFeature
         };
 
         $scope.timers = [2000, 3000];
         $scope.wordNumbers = [3, 4];
         $scope.groupNumbers = [4, 5];
+        $scope.incentiveNumbers = [1, 2, 3, 4];
         $scope.probabilities = [0.25, 0.3];
 
         $scope.save = function () {

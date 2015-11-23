@@ -20,9 +20,9 @@
         var showTimer = Settings.showTimer;
         $scope.experimentType = ExperimentService.experimentType;
 
-        var counter = 1;
+        var counter = 0;
 
-        /*var experimentIncentives = [
+       /* var experimentIncentives = [
             ['щука', 'окунь', 'кит','перловка',
                 'гречка', 'рис','мотоцикл', 'машина',
                 'трактор','инфляция', 'дефляция', 'процент',
