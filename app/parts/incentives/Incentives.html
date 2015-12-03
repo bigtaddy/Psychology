@@ -3,10 +3,10 @@
     <form
           class="pure-form incentives form">
         <fieldset>
-            <legend>Редактирование слов в стимуле</legend>
+            <legend>Редактирование наборов слов</legend>
 
             <div class="pure-control-group">
-                <label>Выберите номер стимула для редактирования</label>
+                <label>Выберите номер набора для редактирования</label>
                 <select ng-model="settings.numberIncentives" ng-options="incentiveNumber for incentiveNumber in incentiveNumbers">
                 </select>
             </div>
@@ -47,7 +47,6 @@
                         <td>{{word}}
                         </td>
                         <td>
-
                             <button
                                     class="pure-button button-error"
                                     ng-click="remove($index)">
@@ -60,7 +59,7 @@
             </div>
 
             <div class="pure-controls">
-                <button class="pure-button button-success" ng-click="save()">Сохранить изменения в стимуле</button>
+                <button class="pure-button button-success" ng-click="save()">Сохранить изменения в наборе</button>
                 <button class="pure-button pure-button-primary" ng-click="return()">Назад</button>
 
             </div>

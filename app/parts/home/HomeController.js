@@ -34,6 +34,7 @@
                     'стул', 'стол', 'гамак']
             ];*/
 
+        global.Words = global.DefaultExperimentWords;
         var experimentIncentives = global.Words[$scope.experimentType];
 
         $scope.showIncentive = function () {

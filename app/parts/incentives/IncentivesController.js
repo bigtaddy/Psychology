@@ -34,9 +34,6 @@
             }
         }
 
-
-
-
         var changeIncentive = function () {
             incentives = global.Words[experimentNumber];
             $scope.words = incentives[$scope.settings.numberIncentives-1].slice();
@@ -73,7 +70,6 @@
         $scope.return = function () {
             $location.url('/');
         };
-
 
     }
 

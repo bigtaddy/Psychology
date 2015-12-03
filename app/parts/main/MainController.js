@@ -14,7 +14,6 @@
             $location.url('/experiment');
         };
 
-
         $scope.changeSettings = function () {
             $location.url('/settings');
         };
