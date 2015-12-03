@@ -76,6 +76,30 @@
             $location.url('/');
         };
 
+        $scope.saveResults = function () {
+            // convertImagesToBase64();
+            // for demo purposes only we are using below workaround with getDoc() and manual
+            // HTML string preparation instead of simple calling the .getContent(). Becasue
+            // .getContent() returns HTML string of the original document and not a modified
+            // one whereas getDoc() returns realtime document - exactly what we need.
+            //var contentDocument = tinymce.get('content').getDoc();
+            var resultElement = document.body.querySelector('.result-grid');
+            var content = '<!DOCTYPE html>' + resultElement.outerHTML;
+            var orientation = document.querySelector('.page-orientation input:checked').value;
+            var converted = htmlDocx.asBlob(content);
+
+            saveAs(converted, 'test.docx');
+
+            var link = document.createElement('a');
+            link.href = URL.createObjectURL(converted);
+            link.download = 'document.docx';
+            link.appendChild(
+                document.createTextNode('Click here if your download has not started automatically'));
+            var downloadArea = document.getElementById('download-area');
+            downloadArea.innerHTML = '';
+            downloadArea.appendChild(link);
+        };
+
         //start show
         $scope.showIncentive();
     }
