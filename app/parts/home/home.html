@@ -12,6 +12,7 @@
             <legend>Введите слова, которые вы запомнили</legend>
 
             <input type="text"
+                   id="input-remembered-word"
                    autofocus
                    name="word"
                    ng-model="result.rememberedWord"
@@ -35,8 +36,11 @@
     <div class="result" ng-if="isShowResult">
         <result-grid result="experimentResults" experiment-type="experimentType">
         </result-grid>
-        <button class="pure-button button-success save-results" ng-click="saveResults()">Сохранить результаты</button>
-        <button class="pure-button pure-button-primary menu" ng-click="goToMenu()">Вернуться в меню</button>
+        <button class="pure-button button-success save-results"
+                ng-disabled="saveInProgres"
+                ng-click="saveResults()">Сохранить результаты</button>
+        <button class="pure-button pure-button-primary menu"
+                ng-click="goToMenu()">Вернуться в меню</button>
     </div>
 
 
