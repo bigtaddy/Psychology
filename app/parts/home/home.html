@@ -26,7 +26,7 @@
             <button type="submit"
                     class="pure-button button-success finish"
                     ng-click="showIncentive()">
-                    {{isFinished ? 'Показать результаты эксперимента' : 'Показать следующий набор слов'}}
+                    {{isFinished ? 'Результаты эксперимента' : 'Следующий набор слов'}}
             </button>
         </fieldset>
     </form>
@@ -35,7 +35,7 @@
     <div class="result" ng-if="isShowResult">
         <result-grid result="experimentResults" experiment-type="experimentType">
         </result-grid>
-        <button class="pure-button pure-button-primary menu" ng-click="saveResults()">Сохранить результаты</button>
+        <button class="pure-button button-success save-results" ng-click="saveResults()">Сохранить результаты</button>
         <button class="pure-button pure-button-primary menu" ng-click="goToMenu()">Вернуться в меню</button>
     </div>
 

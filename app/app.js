@@ -18,7 +18,12 @@
     };
 
     global.Permissions = {
-        role: 'admin'
+        role: 'admin',
+        userData: {
+            password: '',
+            fullName: '',
+            group: ''
+        }
     };
 
     global.app = ng.module('Psychology', [

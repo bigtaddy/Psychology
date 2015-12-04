@@ -27,6 +27,7 @@
 
 
         function authorize() {
+            global.Permissions.userData = $scope.userData;
             global.Permissions.role = $scope.role;
             global.sessionStorage = global.Permissions.role;
             $location.url('/');

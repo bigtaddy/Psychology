@@ -13,7 +13,7 @@ body {
 }
 
 #content {
-  border: 3px solid #89BAE8;
+ // border: 3px solid #89BAE8;
   border-top: none;
   border-bottom: none;
   padding: 0px 20px;
@@ -108,8 +108,9 @@ body {
     height: 300px;
     overflow-y: scroll;
     table td{
+      border-color: #5D5D5D;
       border-width: 1px;
-      border-right: 1px solid #cbcbcb;
+      border-right: 1px solid #5D5D5D;
     }
   }
 
@@ -147,49 +148,68 @@ body {
   height: 100%;
   font-size: 32px;
 
-  .answers-form{
+  .answers-form {
     height: 500px;
     position: relative;
-      .finish {
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-      }
+    .finish {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
   }
 
-    .incentive {
-      ul{
-        list-style: none;
+  .incentive {
+    ul {
+      list-style: none;
+      display: block;
+      float: left;
+      padding-right: 50px;
+      li {
         display: block;
-        float: left;
-        padding-right: 50px;
-        li {
-          display: block;
-          padding-bottom: 20px;
+        padding-bottom: 20px;
 
-          &.fontSizeFeature{
-            font-size: 42px;
-          }
-          &.fontBoldFeature{
-            font-weight: bold;
-          }
+        &.fontSizeFeature {
+          font-size: 42px;
+        }
+        &.fontBoldFeature {
+          font-weight: bold;
         }
       }
+    }
 
   }
 
-  .menu.pure-button {
-    margin-top: 3em;
-    float: right;
+  .result {
+    .pure-button {
+      margin-top: 5em;
+      margin-left: 15px;
+      &.menu {
+        float: left;
+      }
+      &.save-results {
+        float: right;
+      }
+    }
   }
 }
 
 .result-grid{
-  td[colspan] {
-    text-align: center;
-  }
+    border: 1px solid #464040 !important;
+    &.pure-table-bordered td {
+      border: 1px solid #464040 !important;
+      text-align: center !important;
+
+      td[colspan] {
+        text-align: center !important;
+      }
+
+      &.bold {
+        text-align: left !important;
+      }
+    }
 }
 
 #incentives{
 
 }
+
