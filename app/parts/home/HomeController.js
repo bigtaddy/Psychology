@@ -5,7 +5,7 @@
 (function (global, ng) {
     'use strict';
 
-    function HomeController($scope, $timeout, $location, ExperimentService) {
+    function HomeController ($scope, $timeout, $location, ExperimentService) {
         $scope.isShowIncentive = false;
         $scope.isShowForm = false;
         $scope.isShowResult = false;
@@ -17,33 +17,33 @@
         $scope.incentives = [];
 
         var results = [];
+        var timerId;
         var imagesContainer = document.createElement('div');
+        var images = [];
         var showTimer = Settings.showTimer;
         $scope.experimentType = ExperimentService.experimentType;
 
         var counter = 0;
 
-        /* var experimentIncentives = [
-         ['щука', 'окунь', 'кит','перловка',
-         'гречка', 'рис','мотоцикл', 'машина',
-         'трактор','инфляция', 'дефляция', 'процент',
-         'стул', 'стол', 'гамак']
-         ,
-         ['щука', 'окунь', 'кит','перловка',
-         'гречка', 'рис','мотоцикл', 'машина',
-         'трактор','инфляция', 'дефляция', 'процент',
-         'стул', 'стол', 'гамак']
-         ];*/
-
         global.Words = global.DefaultExperimentWords;
         var experimentIncentives = global.Words[$scope.experimentType];
 
-        function takeSnapshot() {
-            win.capturePage(function(img) {
-                var image = document.createElement('img');
-                image.src = img;
-                imagesContainer.appendChild(image);
-            }, 'png');
+        function takeSnapshot (callback) {
+            if(global.win) {
+                global.win.capturePage(function (img) {
+                    var image = document.createElement('img');
+                    image.src = img;
+                    image.style.display = 'none';
+                    image.style.width = '600px';
+                    imagesContainer.appendChild(image);
+
+                    images.push(img);
+                    callback();
+                }, 'png');
+            } else {
+                callback();
+            }
+
         }
 
         $scope.showIncentive = function () {
@@ -61,25 +61,32 @@
                 incentive: $scope.incentives,
                 indexesFeatures: $scope.indexesFeatures,
                 rememberedWords: []
-
             };
+
             $scope.isShowForm = false;
             $scope.isShowIncentive = true;
-            takeSnapshot();
 
-            $timeout(function () {
-                $scope.isShowIncentive = false;
-                $scope.isShowForm = true;
-                ++counter;
-                if (counter >= experimentIncentives.length) {
-                    $scope.isFinished = true;
-                }
-            }, showTimer)
+
+            timerId = $timeout(function () {
+                takeSnapshot(function () {
+                    timerId = $timeout(function () {
+                        $scope.isShowIncentive = false;
+                        $scope.isShowForm = true;
+                        ++counter;
+                        if (counter >= experimentIncentives.length) {
+                            $scope.isFinished = true;
+                        }
+                    }, showTimer - 100)
+                });
+
+            }, 100);
+
         };
 
         $scope.addRememberedWord = function () {
             $scope.results[counter - 1].rememberedWords.push($scope.result.rememberedWord);
             $scope.result.rememberedWord = '';
+            document.querySelector('#input-remembered-word').focus();
         };
 
         $scope.goToMenu = function () {
@@ -87,6 +94,7 @@
         };
 
         $scope.saveResults = function () {
+            $scope.saveInProgres = true;
             var tableResult = document.querySelector('.result-grid');
             var cloneTableResult = tableResult.cloneNode(true);
 
@@ -103,39 +111,51 @@
                 elements[i].style.cssText = styleText;
             }
 
-           var buttons = document.querySelectorAll('.pure-button');
-            for (var i = 0, max = buttons.length; i < max; i++) {
-                buttons[i].style.display = 'none';
-            }
 
-            // var content = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head> <body>' + resultElement.outerHTML + '</body></html>';
+            // var content = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>
+            // <body>' + resultElement.outerHTML + '</body></html>';
             var content = '<!DOCTYPE html>' + document.documentElement.outerHTML;
-            var converted = htmlDocx.asBlob(content);
-            var docName = global.Permissions.userData.fullName + ' ' + global.Permissions.userData.group + '.docx';
+            var converted = global.htmlDocx.asBlob(content);
+            var filename = global.Permissions.userData.fullName + ' ' + global.Permissions.userData.group + '.docx';
 
             tableResult.innerHTML = cloneTableResult.innerHTML;
-            for (var i = 0, max = buttons.length; i < max; i++) {
-                buttons[i].style.display = '';
-            }
 
-            saveAs(converted, docName);
 
-            var buf = new Buffer(converted, 'base64');
-          /*  require('fs').writeFile('/Результаты/' + docName, buf, 'base64', function(err) {
-                if(err) {
-                    alert(err);
-                }
-            });*/
+           // saveAs(converted, filename);
 
-            //    var link = document.createElement('a');
-            //   link.href = URL.createObjectURL(converted);
-            //   link.download = 'document.docx';
-            //   link.click();
+            global.Permissions.userData.fullName = 'администратор';
+
+            var experimentRootPath = './Результаты экспериментов/';
+            var currentDate = new Date(Date.now());
+            var pathForResult = experimentRootPath + global.Permissions.userData.fullName + ' ' +
+                currentDate.toLocaleDateString() + ' ' + currentDate.getHours() + 'ч ' + currentDate.getMinutes() + 'м ' + currentDate.getSeconds() + 'с ';
+
+
+            if(!global.fs.existsSync(pathForResult)) {
+                global.fs.mkdirSync(pathForResult, '0766');
+                global.fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType +'.docx', converted);
+                 images.forEach(function (image, index) {
+                         var base64Data = image.replace(/^data:image\/png;base64,/, '');
+                         global.fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
+                     }
+                 );
+             }
+
+            global.notifier.notify({
+                title: 'Сохранение',
+                // Формируем строку, в которой будет написано: Файл MyLittlePony.md успешно сохранён!
+                message: 'Отчет  успешно сохранен!'
+            });
+            $scope.saveInProgres = false;
 
         };
 
         //start show
         $scope.showIncentive();
+
+        $scope.$on('destroy', function () {
+            $timeout.cancel();
+        })
     }
 
 

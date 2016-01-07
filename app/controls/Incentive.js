@@ -49,7 +49,7 @@
                 element[0].appendChild(fragmentElement);
 
                 if (scope.experimentType === 2 || scope.experimentType === 5) {
-                    element[0].classList.add('wordsInGroups');
+                    element[0].classList.add('words-in-groups');
                 }
 
             }

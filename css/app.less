@@ -159,14 +159,24 @@ body {
   }
 
   .incentive {
+    width: 800px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+
     ul {
       list-style: none;
-      display: block;
-      float: left;
-      padding-right: 50px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      margin: 0;
+      padding: 0;
+
       li {
         display: block;
-        padding-bottom: 20px;
+        margin: 0;
 
         &.fontSizeFeature {
           font-size: 42px;
@@ -176,6 +186,35 @@ body {
         }
       }
     }
+
+    &.words-in-groups {
+      display: block;
+
+      ul {
+        display: block;
+        float: left;
+        width: 40%;
+        height: 36%;
+        padding-right: 0;
+        padding-bottom: 14%;
+
+        &:nth-child(odd) {
+          clear: left;
+          padding-right: 10%;
+        }
+
+        li {
+          display: inline-block;
+          min-width: 50%;
+          height: 50%;
+          &:nth-child(odd) {
+            float: left;
+            clear: left;
+          }
+        }
+      }
+    }
+
 
   }
 

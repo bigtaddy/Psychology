@@ -52,7 +52,7 @@
         $scope.words = [];
 
         $scope.add = function ( ) {
-            $scope.words.push($scope.newWord.name);
+            $scope.words.push($scope.newWord.name.toLowerCase());
             $scope.newWord.name = '';
             document.querySelector('.new-word').focus();
         };
