@@ -5,7 +5,7 @@
 (function (global, ng) {
     'use strict';
 
-    function HomeController ($scope, $timeout, $location, ExperimentService) {
+    function HomeController($scope, $timeout, $location, ExperimentService) {
         $scope.isShowIncentive = false;
         $scope.isShowForm = false;
         $scope.isShowResult = false;
@@ -25,12 +25,12 @@
 
         var counter = 0;
 
-        global.Words = global.DefaultExperimentWords;
+        global.Words = DefaultExperimentWords;
         var experimentIncentives = global.Words[$scope.experimentType];
 
-        function takeSnapshot (callback) {
-            if(global.win) {
-                global.win.capturePage(function (img) {
+        function takeSnapshot(callback) {
+            if (win) {
+                win.capturePage(function (img) {
                     var image = document.createElement('img');
                     image.src = img;
                     image.style.display = 'none';
@@ -94,11 +94,14 @@
         };
 
         $scope.saveResults = function () {
+            var userFullName = global.Permissions.userData.fullName;
+            var currentDate = new Date(Date.now());
+
             $scope.saveInProgres = true;
             var tableResult = document.querySelector('.result-grid');
             var cloneTableResult = tableResult.cloneNode(true);
-
             var elements = tableResult.querySelectorAll('*');
+            var cloneElements = cloneTableResult.querySelectorAll('*');
             var style;
             var styleText = '';
             for (var i = 0, max = elements.length; i < max; i++) {
@@ -107,47 +110,47 @@
                 keys.forEach(function (key) {
                     styleText += key + ':' + style[key] + '; ';
                 });
-                styleText += 'font-size' + ':' + '18px' + '; ';
-                elements[i].style.cssText = styleText;
+                styleText += 'font-size:18px; ';
+
+                cloneElements[i].style.cssText = styleText;
             }
 
 
-            // var content = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>
-            // <body>' + resultElement.outerHTML + '</body></html>';
-            var content = '<!DOCTYPE html>' + document.documentElement.outerHTML;
-            var converted = global.htmlDocx.asBlob(content);
-            var filename = global.Permissions.userData.fullName + ' ' + global.Permissions.userData.group + '.docx';
+            var infoElement = document.createElement('div');
+            infoElement.style.cssText = 'font-size:18px;';
+            infoElement.innerHTML = 'Испытуемый: ' + userFullName + ' <br/>' +
+                'Дата и время: ' + currentDate.toLocaleString() + ' <br/>';
 
-            tableResult.innerHTML = cloneTableResult.innerHTML;
+            var content = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>' +
+                '<body>' + infoElement.outerHTML +
+                cloneTableResult.outerHTML + '</body></html>';
+            var converted = htmlDocx.asBlob(content);
+
+            var experimentRootPath = './Результаты экспериментов';
+            var pathForResult = experimentRootPath + '/' +
+                userFullName + ' ' +
+                currentDate.toLocaleDateString() + ' ' +
+                currentDate.getHours() + 'ч ' +
+                currentDate.getMinutes() + 'м ' +
+                currentDate.getSeconds() + 'с ';
 
 
-           // saveAs(converted, filename);
+            if (!fs.existsSync(pathForResult)) {
+                if (!fs.existsSync(experimentRootPath)) {
+                    fs.mkdirSync(experimentRootPath, '0766');
+                }
+                fs.mkdirSync(pathForResult, '0766');
+                fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType + '.docx', converted);
+                images.forEach(function (image, index) {
+                        var base64Data = image.replace(/^data:image\/png;base64,/, '');
+                        fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
+                    }
+                );
+            }
 
-            global.Permissions.userData.fullName = 'администратор';
-
-            var experimentRootPath = './Результаты экспериментов/';
-            var currentDate = new Date(Date.now());
-            var pathForResult = experimentRootPath + global.Permissions.userData.fullName + ' ' +
-                currentDate.toLocaleDateString() + ' ' + currentDate.getHours() + 'ч ' + currentDate.getMinutes() + 'м ' + currentDate.getSeconds() + 'с ';
-
-
-            if(!global.fs.existsSync(pathForResult)) {
-                global.fs.mkdirSync(pathForResult, '0766');
-                global.fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType +'.docx', converted);
-                 images.forEach(function (image, index) {
-                         var base64Data = image.replace(/^data:image\/png;base64,/, '');
-                         global.fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
-                     }
-                 );
-             }
-
-            global.notifier.notify({
-                title: 'Сохранение',
-                // Формируем строку, в которой будет написано: Файл MyLittlePony.md успешно сохранён!
-                message: 'Отчет  успешно сохранен!'
+            var notification = new Notification("Сохранение", {
+                body: 'Отчет сохранен в папке "Результаты экспериментов"'
             });
-            $scope.saveInProgres = false;
-
         };
 
         //start show

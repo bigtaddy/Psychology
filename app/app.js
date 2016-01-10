@@ -113,7 +113,7 @@
                     };
                 global.document.onload = fadeOut();
 
-            //    $location.url('/login');
+               $location.url('/login');
 
                 var settings = global.localStorage.Settings;
                 if(settings) {
