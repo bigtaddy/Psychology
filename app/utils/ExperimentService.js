@@ -2,18 +2,16 @@
 
     'use strict';
 
-    function ExperimentService () {
+    function ExperimentService() {
 
         var _this = this;
-
         this.experimentType = 1;
 
-        function rand (min, max) {
-
+        function rand(min, max) {
             return Math.random() * (max - min) + min;
         }
 
-        function getRandomItem (list, weight) {
+        function getRandomItem(list, weight) {
             var total_weight = weight.reduce(function (prev, cur, i, arr) {
                 return prev + cur;
             });
@@ -34,30 +32,28 @@
 
         this.getIndexesOfWordsWithFeatures = function (countOfWords) {
             var indexesFeatures = [];
-           if(_this.experimentType === 3 || _this.experimentType === 4 || _this.experimentType === 5) {
-               var list = [1, 0];
-               var weight = [0.25, 0.75];
-               var randomItem;
+            if (_this.experimentType === 3 || _this.experimentType === 4 || _this.experimentType === 5) {
+                var list = [1, 0];
+                var weight = [0.25, 0.75];
+                var randomItem;
 
-               for (var i = 0; i < countOfWords; i++) {
-                   randomItem = getRandomItem(list, weight);
-                   if(randomItem) {
-                       indexesFeatures.push(i);
-                   }
-               }
+                for (var i = 0; i < countOfWords; i++) {
+                    randomItem = getRandomItem(list, weight);
+                    if (randomItem) {
+                        indexesFeatures.push(i);
+                    }
+                }
 
-           }
+            }
 
             return indexesFeatures;
         };
 
         this.saveExperiment = function (experimentResult) {
-
             return id;
         };
 
         this.getExperiment = function (id) {
-
             return experimentResult;
         };
 

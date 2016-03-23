@@ -16,14 +16,13 @@
         $scope.results = [];
         $scope.incentives = [];
 
-        var results = [];
         var timerId;
         var imagesContainer = document.createElement('div');
         var images = [];
         var showTimer = Settings.showTimer;
         $scope.experimentType = ExperimentService.experimentType;
 
-        var counter = 0;
+        var incentiveCounter = 0;
 
         global.Words = DefaultExperimentWords;
         var experimentIncentives = global.Words[$scope.experimentType];
@@ -54,10 +53,10 @@
                 return;
             }
             //create new result
-            $scope.incentives = experimentIncentives[counter].slice();
+            $scope.incentives = experimentIncentives[incentiveCounter].slice();
             $scope.indexesFeatures = ExperimentService.getIndexesOfWordsWithFeatures($scope.incentives.length);
 
-            $scope.results[counter] = {
+            $scope.results[incentiveCounter] = {
                 incentive: $scope.incentives,
                 indexesFeatures: $scope.indexesFeatures,
                 rememberedWords: []
@@ -72,8 +71,8 @@
                     timerId = $timeout(function () {
                         $scope.isShowIncentive = false;
                         $scope.isShowForm = true;
-                        ++counter;
-                        if (counter >= experimentIncentives.length) {
+                        ++incentiveCounter;
+                        if (incentiveCounter >= experimentIncentives.length) {
                             $scope.isFinished = true;
                         }
                     }, showTimer - 100)
@@ -84,7 +83,7 @@
         };
 
         $scope.addRememberedWord = function () {
-            $scope.results[counter - 1].rememberedWords.push($scope.result.rememberedWord);
+            $scope.results[incentiveCounter - 1].rememberedWords.push($scope.result.rememberedWord);
             $scope.result.rememberedWord = '';
             document.querySelector('#input-remembered-word').focus();
         };
@@ -95,6 +94,7 @@
 
         $scope.saveResults = function () {
             var userFullName = global.Permissions.userData.fullName;
+            var userGroup = global.Permissions.userData.group;
             var currentDate = new Date(Date.now());
 
             $scope.saveInProgres = true;
@@ -119,7 +119,8 @@
             var infoElement = document.createElement('div');
             infoElement.style.cssText = 'font-size:18px;';
             infoElement.innerHTML = 'Испытуемый: ' + userFullName + ' <br/>' +
-                'Дата и время: ' + currentDate.toLocaleString() + ' <br/>';
+                'Группа: ' + userGroup + ' <br/>' +
+            'Дата и время: ' + currentDate.toLocaleString() + ' <br/>';
 
             var content = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>' +
                 '<body>' + infoElement.outerHTML +
@@ -157,7 +158,7 @@
         $scope.showIncentive();
 
         $scope.$on('destroy', function () {
-            $timeout.cancel();
+            $timeout.cancel(timerId);
         })
     }
 

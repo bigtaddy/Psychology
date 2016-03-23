@@ -7,14 +7,13 @@
 
     function IncentivesController($scope, $location, $route) {
 
-
         var Words = global.Words;
-
         var experimentNumber =  $route.current.params.number;
+        var incentives = [];
+
         $scope.settings = {numberIncentives: 1};
         $scope.incentiveNumbers = [];
 
-        var incentives = [];
         if(!Words[experimentNumber]) {
             Words[experimentNumber] = [];
         }
@@ -62,7 +61,6 @@
         };
 
         $scope.save = function () {
-
             Words[experimentNumber][$scope.settings.numberIncentives-1] = $scope.words.slice();
             global.localStorage.Words = JSON.stringify(Words);
         };
@@ -72,7 +70,6 @@
         };
 
     }
-
 
     app.controller('IncentivesController', IncentivesController);
 

@@ -17,7 +17,7 @@
         $scope.login = function login() {
             if($scope.role === 'admin') {
                 if(AdminAccount.password === $scope.userData.password) {
-                    $scope.userData.fullName = 'администратор';
+                    $scope.userData.fullName = 'РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ';
                     authorize();
                 }
             } else {
