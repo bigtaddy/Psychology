@@ -10,7 +10,7 @@
         probabilityWordFeature: 0.25
     };
 
-    global.Words= {};
+    global.Words = DefaultExperimentWords;;
 
     global.AdminAccount = {
         login: 'admin',
@@ -23,7 +23,8 @@
             password: '',
             fullName: '',
             group: ''
-        }
+        },
+        isLoggedIn: false
     };
 
     global.app = ng.module('Psychology', [
@@ -98,6 +99,7 @@
 
                 var loader = global.document.getElementById('loader'),
                     opacity = 1,
+
                     fadeOut = function () {
                         setTimeout(function () {
                             opacity -= 0.1;
@@ -111,9 +113,8 @@
                             }
                         }, 50);
                     };
-                global.document.onload = fadeOut();
 
-               $location.url('/login');
+                global.document.onload = fadeOut();
 
                 var settings = global.localStorage.Settings;
                 if(settings) {
@@ -123,6 +124,16 @@
                 if(words) {
                     global.Words = JSON.parse(words);
                 }
+
+                $rootScope.$on('$routeChangeSuccess',
+                    function (event, next, current) {
+
+                        if(!next.$$route || (!Permissions.isLoggedIn && next.$$route.originalPath !== '/login')) {
+                            $location.url('/login');
+                        }
+
+                    });
+
             }
         ]);
 

@@ -2,6 +2,10 @@
 
     'use strict';
 
+    /**
+     * Directive for creating incentive
+     * @constructor
+     */
     function Incentive () {
         return {
             restrict: 'E',

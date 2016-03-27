@@ -16,16 +16,14 @@
         $scope.results = [];
         $scope.incentives = [];
 
-        var results = [];
         var timerId;
         var imagesContainer = document.createElement('div');
         var images = [];
         var showTimer = Settings.showTimer;
-        $scope.experimentType = ExperimentService.experimentType;
-
         var counter = 0;
 
-        global.Words = DefaultExperimentWords;
+        $scope.experimentType = ExperimentService.experimentType;
+
         var experimentIncentives = global.Words[$scope.experimentType];
 
         function takeSnapshot(callback) {
@@ -148,12 +146,12 @@
                 );
             }
 
-            var notification = new Notification("Сохранение", {
+            new Notification("Сохранение", {
                 body: 'Отчет сохранен в папке "Результаты экспериментов"'
             });
         };
 
-        //start show
+
         $scope.showIncentive();
 
         $scope.$on('destroy', function () {
@@ -163,6 +161,5 @@
 
 
     app.controller('HomeController', HomeController);
-
 
 }(window, angular));
