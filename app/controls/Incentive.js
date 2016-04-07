@@ -2,7 +2,11 @@
 
     'use strict';
 
-    function Incentive() {
+    /**
+     * Directive for creating incentive
+     * @constructor
+     */
+    function Incentive () {
         return {
             restrict: 'E',
             replace: true,
@@ -37,9 +41,7 @@
                     wordElements.push(li);
                 });
 
-                wordElements = wordElements.split(Settings.numberWordsInGroup);
-                wordElements = wordElements.slice(0, Settings.numberGroupsInIncentive);
-
+                wordElements= wordElements.split(Settings.numberWordsInGroup);
                 wordElements.forEach(function (group) {
                     var ul = ulElement.cloneNode();
                     group.forEach(function (word) {

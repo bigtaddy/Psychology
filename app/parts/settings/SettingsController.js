@@ -16,7 +16,7 @@
             probabilityWordFeature: global.Settings.probabilityWordFeature
         };
 
-        $scope.timers = [2000, 3000];
+        $scope.timers = [2000, 3000, 4000];
         $scope.wordNumbers = [3, 4];
         $scope.groupNumbers = [4, 5];
         $scope.incentiveNumbers = [1, 2, 3, 4];
@@ -33,11 +33,9 @@
             $location.url('/');
         };
 
-
     }
 
 
     app.controller('SettingsController', SettingsController);
-
 
 }(window, angular));
