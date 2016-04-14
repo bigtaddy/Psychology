@@ -20,8 +20,15 @@
 
 var NwBuilder = require('nw-builder');
 var nw = new NwBuilder({
-    files: './**', // use the glob format
-    platforms: ['win32', 'win64'],
+    files: [ "package.json",
+        "index.html",
+        "./startScreen/**/*",
+        "./app/**/*",
+        "./libs/**/*",
+        "./css/**/*"],
+    cacheDir: './cache',
+    platforms: ['win32'],
+    version: '0.12.3',
     appName: 'Избирательность зрительного восприятия',
     buildDir: './build'
 });
