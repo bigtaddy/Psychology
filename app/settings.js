@@ -2,21 +2,22 @@
 
     'use strict';
 
-    if(typeof require === undefined) {
-        return;
+    if(typeof require === 'undefined') {
+        var require = function () {
+            return null;
+        }
     }
-   // var Datastore = require('nedb');
-    //global.db = new Datastore({filename: 'database', autoload: true});
-    //global.db = new Datastore({filename: 'database', autoload: true});
-    //global.db = new Datastore({filename: 'database', autoload: true});
+    
+    global.NodeUtils = {};
 
-    global.gui = require('nw.gui');
-    global.win = gui.Window.get();
-    global.htmlDocx = require('html-docx-js');
-    global.fs = require('fs');
-    global.notifier = require('node-notifier');
-
-
-    global.win = win;
+    NodeUtils.gui = require('nw.gui');
+    if(NodeUtils.gui) {
+        NodeUtils.win = gui.Window.get();
+    } else {
+        NodeUtils.win = null;
+    }
+    NodeUtils.htmlDocx = require('html-docx-js');
+    NodeUtils.fs = require('fs');
+    NodeUtils.notifier = require('node-notifier');
 
 }(this));

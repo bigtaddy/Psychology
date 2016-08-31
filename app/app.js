@@ -10,7 +10,7 @@
         probabilityWordFeature: 0.25
     };
 
-    global.Words = DefaultExperimentWords;;
+    global.Words = JSON.parse(JSON.stringify(global.DefaultExperimentWords));
 
     global.AdminAccount = {
         login: 'admin',

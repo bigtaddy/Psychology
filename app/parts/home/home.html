@@ -14,8 +14,10 @@
             <input type="text"
                    id="input-remembered-word"
                    name="word"
+                   autofocus
+                   tabindex="1"
                    ng-model="result.rememberedWord"
-                   placeholder="...">
+                   placeholder="">
 
             <button type="submit"
                     class="pure-button pure-button-primary submit"
@@ -23,11 +25,17 @@
                     ng-click="addRememberedWord()">
                 Добавить слово
             </button>
-            <button type="submit"
-                    class="pure-button button-success finish"
-                    ng-click="showIncentive()">
+
+            <div class="footer-buttons">
+                <button class="pure-button pure-button-primary menu"
+                        ng-click="goToMenu()">Главное меню</button>
+                <button type="submit"
+                        class="pure-button button-success finish"
+                        ng-click="showIncentive()">
                     {{isFinished ? 'Результаты эксперимента' : 'Следующий набор слов'}}
-            </button>
+                </button>
+            </div>
+
         </fieldset>
     </form>
 

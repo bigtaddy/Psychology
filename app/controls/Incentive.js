@@ -3,7 +3,7 @@
     'use strict';
 
     /**
-     * Directive for creating incentive
+     * Directive for creating incentive (набор слов)
      * @constructor
      */
     function Incentive () {
@@ -21,7 +21,6 @@
                 var fragmentElement = document.createDocumentFragment();
                 var ulElement = document.createElement('ul');
                 var liElement = document.createElement('li');
-
 
                 //incentive contains words
 

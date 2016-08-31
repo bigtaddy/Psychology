@@ -4,6 +4,10 @@
 
 (function (global, ng) {
     'use strict';
+    
+    var Fs = NodeUtils.fs;
+    var HtmlDocx = NodeUtils.htmlDocx;
+    var Win = NodeUtils.win;
 
     function HomeController($scope, $timeout, $location, ExperimentService) {
         $scope.isShowIncentive = false;
@@ -27,8 +31,8 @@
         var experimentIncentives = global.Words[$scope.experimentType];
 
         function takeSnapshot(callback) {
-            if (win) {
-                win.capturePage(function (img) {
+            if (Win) {
+                Win.capturePage(function (img) {
                     var image = document.createElement('img');
                     image.src = img;
                     image.style.display = 'none';
@@ -44,6 +48,13 @@
 
         }
 
+        function focusOnInputElement () {
+            var inputElement = document.querySelector('#input-remembered-word');
+            if(inputElement) {
+                inputElement.focus();
+            }
+        }
+
         $scope.showIncentive = function () {
             if ($scope.isFinished) {
                 $scope.experimentResults = new ExperimentResults($scope.results, $scope.experimentType);
@@ -51,6 +62,8 @@
                 $scope.isShowResult = true;
                 return;
             }
+            $scope.result.rememberedWord = '';
+
             //create new result
             $scope.incentives = experimentIncentives[counter].slice();
             $scope.indexesFeatures = ExperimentService.getIndexesOfWordsWithFeatures($scope.incentives.length);
@@ -74,6 +87,9 @@
                         if (counter >= experimentIncentives.length) {
                             $scope.isFinished = true;
                         }
+                        timerId = $timeout(function () {
+                            focusOnInputElement();
+                        }, 100);
                     }, showTimer - 100)
                 });
 
@@ -84,7 +100,7 @@
         $scope.addRememberedWord = function () {
             $scope.results[counter - 1].rememberedWords.push($scope.result.rememberedWord);
             $scope.result.rememberedWord = '';
-            document.querySelector('#input-remembered-word').focus();
+            focusOnInputElement();
         };
 
         $scope.goToMenu = function () {
@@ -122,7 +138,7 @@
             var content = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>' +
                 '<body>' + infoElement.outerHTML +
                 cloneTableResult.outerHTML + '</body></html>';
-            var converted = htmlDocx.asBlob(content);
+            var converted = HtmlDocx.asBlob(content);
 
             var experimentRootPath = './Результаты экспериментов';
             var pathForResult = experimentRootPath + '/' +
@@ -133,15 +149,15 @@
                 currentDate.getSeconds() + 'с ';
 
 
-            if (!fs.existsSync(pathForResult)) {
-                if (!fs.existsSync(experimentRootPath)) {
-                    fs.mkdirSync(experimentRootPath, '0766');
+            if (!Fs.existsSync(pathForResult)) {
+                if (!Fs.existsSync(experimentRootPath)) {
+                    Fs.mkdirSync(experimentRootPath, '0766');
                 }
-                fs.mkdirSync(pathForResult, '0766');
-                fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType + '.docx', converted);
+                Fs.mkdirSync(pathForResult, '0766');
+                Fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType + '.docx', converted);
                 images.forEach(function (image, index) {
                         var base64Data = image.replace(/^data:image\/png;base64,/, '');
-                        fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
+                        Fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
                     }
                 );
             }
@@ -155,7 +171,7 @@
         $scope.showIncentive();
 
         $scope.$on('destroy', function () {
-            $timeout.cancel();
+            $timeout.cancel(timerId);
         })
     }
 
