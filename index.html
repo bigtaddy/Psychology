@@ -6,17 +6,21 @@
     <link rel="stylesheet/less" href="css/pure.less">
     <link rel="stylesheet/less" href="css/buttons.less">
     <link rel="stylesheet/less" href="css/app.less">
-
     <script type="text/javascript" src="libs/less.js"></script>
 </head>
 <body>
-<div id="loader"></div>
 
 <div id="content">
+    <div id="loader">Загрузка...</div>
     <div class="view" ng-view="">
     </div>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelector('#loader').style.display = 'none';
+    });
+</script>
     <script src="libs/angular.js"></script>
     <script src="libs/angular-route.js"></script>
     <script src="libs/FileSaver.js"></script>

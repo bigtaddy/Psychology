@@ -3,8 +3,22 @@ html,body {
 }
 
 body {
-  width: 1280px;
   margin: 0 auto;
+}
+
+#loader {
+  display: block;
+  margin: 30% 48%;
+  position: absolute;
+  font-size: 30px;
+  text-align: center;
+}
+
+.error-message {
+  display: block;
+  color: red;
+  position: absolute;
+  right: 104px;
 }
 
 #content, .view{
@@ -40,6 +54,15 @@ body {
       margin-bottom: 2em;
     }
 
+    .password-control-group {
+      position: relative;
+    }
+
+    .button-controls{
+      margin: 2.5em 0 0 9em;
+    }
+
+
     button[type="submit"] {
       width: 150px;
       margin-left: 50px;
@@ -47,6 +70,8 @@ body {
 
   }
 }
+
+
 
 #settings{
   display: flex;

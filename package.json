@@ -4,8 +4,7 @@
   "author": "Mikhail Poddubsky",
   "version": "0.1.0",
   "repository": "https://github.com/bigtaddy/Psychology",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "bower": "~1.4.1",
     "jshint": "~2.8.0",
     "nedb ": "~1.1.3",

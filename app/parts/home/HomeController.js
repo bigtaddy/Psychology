@@ -107,7 +107,46 @@
             $location.url('/');
         };
 
-        $scope.saveResults = function () {
+
+
+        function saveHtmlToDoc(htmlContent) {
+            var docx = HtmlDocx.Buffer(htmlContent);
+            var userFullName = global.Permissions.userData.fullName;
+            var currentDate = new Date(Date.now());
+            var experimentRootPath = './Результаты экспериментов';
+            var pathForResult = experimentRootPath + '/' +
+                userFullName + ' ' +
+                currentDate.toLocaleDateString() + ' ' +
+                currentDate.getHours() + 'ч ' +
+                currentDate.getMinutes() + 'м ' +
+                currentDate.getSeconds() + 'с ';
+
+
+            try {
+                if (!Fs.existsSync(pathForResult)) {
+                    if (!Fs.existsSync(experimentRootPath)) {
+                        Fs.mkdirSync(experimentRootPath, '0766');
+                    }
+                    Fs.mkdirSync(pathForResult, '0766');
+                    Fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType + '.docx', docx);
+                    images.forEach(function (image, index) {
+                            var base64Data = image.replace(/^data:image\/png;base64,/, '');
+                            Fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
+                        }
+                    );
+                    new Notification("Сохранение", {
+                        body: 'Отчет сохранен в папке "Результаты экспериментов"'
+                    });
+                }
+            } catch (error) {
+                new Notification("Сохранение", {
+                    body: 'Произошла ошибка при сохранении"'
+                });
+            }
+
+        }
+
+        $scope.saveResults = function saveResults () {
             var userFullName = global.Permissions.userData.fullName;
             var currentDate = new Date(Date.now());
 
@@ -118,55 +157,30 @@
             var cloneElements = cloneTableResult.querySelectorAll('*');
             var style;
             var styleText = '';
-            for (var i = 0, max = elements.length; i < max; i++) {
-                style = document.defaultView.getComputedStyle(elements[i]);
-                var keys = Object.keys(style);
-                keys.forEach(function (key) {
-                    styleText += key + ':' + style[key] + '; ';
-                });
-                styleText += 'font-size:18px; ';
-
-                cloneElements[i].style.cssText = styleText;
-            }
-
-
             var infoElement = document.createElement('div');
             infoElement.style.cssText = 'font-size:18px;';
             infoElement.innerHTML = 'Испытуемый: ' + userFullName + ' <br/>' +
                 'Дата и время: ' + currentDate.toLocaleString() + ' <br/>';
 
-            var content = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>' +
-                '<body>' + infoElement.outerHTML +
-                cloneTableResult.outerHTML + '</body></html>';
-            var converted = HtmlDocx.asBlob(content);
+            for (var i = 0, max = elements.length; i < max; i++) {
+                style = document.defaultView.getComputedStyle(elements[i]);
+                var keys = Object.keys(style);
 
-            var experimentRootPath = './Результаты экспериментов';
-            var pathForResult = experimentRootPath + '/' +
-                userFullName + ' ' +
-                currentDate.toLocaleDateString() + ' ' +
-                currentDate.getHours() + 'ч ' +
-                currentDate.getMinutes() + 'м ' +
-                currentDate.getSeconds() + 'с ';
+                keys.forEach(function (key) {
+                    styleText += key + ':' + style[key] + '; ';
+                });
 
+                styleText += 'font-size:18px; ';
 
-            if (!Fs.existsSync(pathForResult)) {
-                if (!Fs.existsSync(experimentRootPath)) {
-                    Fs.mkdirSync(experimentRootPath, '0766');
-                }
-                Fs.mkdirSync(pathForResult, '0766');
-                Fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType + '.docx', converted);
-                images.forEach(function (image, index) {
-                        var base64Data = image.replace(/^data:image\/png;base64,/, '');
-                        Fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
-                    }
-                );
+                cloneElements[i].style.cssText = styleText;
             }
 
-            new Notification("Сохранение", {
-                body: 'Отчет сохранен в папке "Результаты экспериментов"'
-            });
-        };
+            var htmlContent = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>' +
+                '<body>' + infoElement.outerHTML +
+                cloneTableResult.outerHTML + '</body></html>';
 
+            saveHtmlToDoc(htmlContent);
+        };
 
         $scope.showIncentive();
 

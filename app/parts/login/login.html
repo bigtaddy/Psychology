@@ -1,5 +1,5 @@
 <div id="login">
-    <form name="login-form"
+    <form name="loginForm"
           class="login-form pure-form pure-form-aligned"
           ng-submit="login()">
 
@@ -38,14 +38,16 @@
             </div>
 
             <div class="admin-fields" ng-if="role=='admin'">
-                <div class="pure-control-group">
+                <div class="pure-control-group password-control-group">
                     <label>Пароль</label>
                     <input type="password" autofocus ng-model="userData.password" required="">
+                    <div ng-show="!!isLoginSubmit && !isPasswordValid()"
+                         class="error-message">неверный пароль</div>
                 </div>
 
             </div>
 
-            <div class="pure-controls">
+            <div class="pure-controls button-controls">
                 <button type="submit"
                         class="pure-button pure-button-primary"
                       >Войти</button>

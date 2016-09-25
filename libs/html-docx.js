@@ -12458,12 +12458,12 @@ module.exports = {
     buffer = zip.generate({
       type: 'arraybuffer'
     });
-    if (global.Blob) {
+    if (global.Buffer) {
+      return new Buffer(new Uint8Array(buffer));
+    } else if (global.Blob) {
       return new Blob([buffer], {
         type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
       });
-    } else if (global.Buffer) {
-      return new Buffer(new Uint8Array(buffer));
     } else {
       throw new Error("Neither Blob nor Buffer are accessible in this environment. " + "Consider adding Blob.js shim");
     }
