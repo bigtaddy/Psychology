@@ -95,32 +95,13 @@
         .run([
             '$rootScope', '$location',
             function ($rootScope, $location) {
-
-
-                var loader = global.document.getElementById('loader'),
-                    opacity = 1,
-
-                    fadeOut = function () {
-                        setTimeout(function () {
-                            opacity -= 0.1;
-                            loader.style.opacity = opacity;
-
-                            if (opacity > 0) {
-                                fadeOut();
-                            } else {
-                                loader.parentNode.removeChild(loader);
-                                loader = null;
-                            }
-                        }, 50);
-                    };
-
-                global.document.onload = fadeOut();
-
                 var settings = global.localStorage.Settings;
+                var words = global.localStorage.Words;
+
                 if(settings) {
                     global.Settings = JSON.parse(settings);
                 }
-                var words = global.localStorage.Words;
+
                 if(words) {
                     global.Words = JSON.parse(words);
                 }
@@ -133,7 +114,6 @@
                         }
 
                     });
-
             }
         ]);
 

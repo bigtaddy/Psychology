@@ -110,13 +110,13 @@
 
 
         function saveHtmlToDoc(htmlContent) {
-            var docx = HtmlDocx.Buffer(htmlContent);
+            var docx = HtmlDocx.asBlob(htmlContent);
             var userFullName = global.Permissions.userData.fullName;
             var currentDate = new Date(Date.now());
             var experimentRootPath = './Результаты экспериментов';
             var pathForResult = experimentRootPath + '/' +
                 userFullName + ' ' +
-                currentDate.toLocaleDateString() + ' ' +
+                currentDate.toDateString() + ' ' +
                 currentDate.getHours() + 'ч ' +
                 currentDate.getMinutes() + 'м ' +
                 currentDate.getSeconds() + 'с ';
@@ -176,8 +176,7 @@
             }
 
             var htmlContent = '<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <title></title> </head>' +
-                '<body>' + infoElement.outerHTML +
-                cloneTableResult.outerHTML + '</body></html>';
+                '<body>' + infoElement.outerHTML + cloneTableResult.outerHTML + '</body></html>';
 
             saveHtmlToDoc(htmlContent);
         };
