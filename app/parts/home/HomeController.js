@@ -126,7 +126,7 @@
 
 
         function saveHtmlToDoc(htmlContent) {
-            var docx = HtmlDocx.Buffer(htmlContent);
+            var docx = HtmlDocx.asBlob(htmlContent);
             var userFullName = global.Permissions.userData.fullName;
             var currentDate = new Date(Date.now());
             var experimentRootPath = './Результаты экспериментов';

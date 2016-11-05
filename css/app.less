@@ -6,13 +6,40 @@ body {
   margin: 0 auto;
 }
 
-#loader {
-  display: block;
-  margin: 30% 48%;
-  position: absolute;
-  font-size: 30px;
-  text-align: center;
+/****LOADER***********/
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
+.loader-wrapper {
+  margin: 0 auto;
+  top: 40%;
+  text-align: center;
+
+  .loader {
+    display: inline-block;
+    position: relative;
+    border: 10px solid rgba(100, 149, 237, 0.5);
+    border-left-color: #ffffff;
+    transform: translateZ(0);
+    animation: load8 1.1s infinite linear;
+  }
+  .loader,
+  .loader:after {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/*******************/
+
+
 
 .error-message {
   display: block;
@@ -22,15 +49,17 @@ body {
 }
 
 #content, .view{
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
+  width: 100%;
 }
 
 #content {
  // border: 3px solid #89BAE8;
   border-top: none;
   border-bottom: none;
-  padding: 0px 20px;
 }
 
 .bold{
