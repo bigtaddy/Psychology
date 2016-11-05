@@ -4,7 +4,7 @@
 
 (function (global, ng) {
     'use strict';
-    
+
     var Fs = NodeUtils.fs;
     var HtmlDocx = NodeUtils.htmlDocx;
     var Win = NodeUtils.win;
@@ -30,6 +30,10 @@
 
         var experimentIncentives = global.Words[$scope.experimentType];
 
+        /**
+         * take snapshot of incentive
+         * @param callback
+         */
         function takeSnapshot(callback) {
             if (Win) {
                 Win.capturePage(function (img) {
@@ -45,12 +49,11 @@
             } else {
                 callback();
             }
-
         }
 
-        function focusOnInputElement () {
+        function focusOnInputElement() {
             var inputElement = document.querySelector('#input-remembered-word');
-            if(inputElement) {
+            if (inputElement) {
                 inputElement.focus();
             }
         }
@@ -84,9 +87,11 @@
                         $scope.isShowIncentive = false;
                         $scope.isShowForm = true;
                         ++counter;
+
                         if (counter >= experimentIncentives.length) {
                             $scope.isFinished = true;
                         }
+
                         timerId = $timeout(function () {
                             focusOnInputElement();
                         }, 100);
@@ -107,6 +112,17 @@
             $location.url('/');
         };
 
+        /**
+         * get formatted date for naming file
+         */
+        function getFormattedDateString(date) {
+            return date.getDay() + '.' +
+                date.getMonth() + '.' +
+                date.getYear() + '. ' +
+                date.getHours() + 'ч ' +
+                date.getMinutes() + 'м ' +
+                date.getSeconds() + 'с ';
+        }
 
 
         function saveHtmlToDoc(htmlContent) {
@@ -116,24 +132,23 @@
             var experimentRootPath = './Результаты экспериментов';
             var pathForResult = experimentRootPath + '/' +
                 userFullName + ' ' +
-                currentDate.toLocaleDateString() + ' ' +
-                currentDate.getHours() + 'ч ' +
-                currentDate.getMinutes() + 'м ' +
-                currentDate.getSeconds() + 'с ';
-
+                getFormattedDateString(currentDate);
 
             try {
                 if (!Fs.existsSync(pathForResult)) {
                     if (!Fs.existsSync(experimentRootPath)) {
                         Fs.mkdirSync(experimentRootPath, '0766');
                     }
+
                     Fs.mkdirSync(pathForResult, '0766');
                     Fs.writeFileSync(pathForResult + '/отчет эксперимента №' + ExperimentService.experimentType + '.docx', docx);
+
                     images.forEach(function (image, index) {
                             var base64Data = image.replace(/^data:image\/png;base64,/, '');
                             Fs.writeFileSync(pathForResult + '/набор слов ' + (index + 1) + '.png', base64Data, 'base64');
                         }
                     );
+
                     new Notification("Сохранение", {
                         body: 'Отчет сохранен в папке "Результаты экспериментов"'
                     });
@@ -146,11 +161,9 @@
 
         }
 
-        $scope.saveResults = function saveResults () {
+        $scope.saveResults = function saveResults() {
             var userFullName = global.Permissions.userData.fullName;
             var currentDate = new Date(Date.now());
-
-            $scope.saveInProgres = true;
             var tableResult = document.querySelector('.result-grid');
             var cloneTableResult = tableResult.cloneNode(true);
             var elements = tableResult.querySelectorAll('*');
@@ -160,7 +173,8 @@
             var infoElement = document.createElement('div');
             infoElement.style.cssText = 'font-size:18px;';
             infoElement.innerHTML = 'Испытуемый: ' + userFullName + ' <br/>' +
-                'Дата и время: ' + currentDate.toLocaleString() + ' <br/>';
+                'Дата и время: ' + getFormattedDateString(currentDate) + ' <br/>';
+
 
             for (var i = 0, max = elements.length; i < max; i++) {
                 style = document.defaultView.getComputedStyle(elements[i]);
@@ -179,6 +193,8 @@
                 '<body>' + infoElement.outerHTML +
                 cloneTableResult.outerHTML + '</body></html>';
 
+            $scope.saveInProgres = true;
+
             saveHtmlToDoc(htmlContent);
         };
 
@@ -188,7 +204,6 @@
             $timeout.cancel(timerId);
         })
     }
-
 
     app.controller('HomeController', HomeController);
 
